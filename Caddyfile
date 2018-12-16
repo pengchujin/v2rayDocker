@@ -1,0 +1,9 @@
+test
+{
+  log ./caddy.log
+  proxy /ray :6555 {
+    websocket
+    header_upstream -Origin
+  }
+}
+

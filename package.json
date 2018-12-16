@@ -1,0 +1,14 @@
+{
+  "name": "oneshell",
+  "version": "1.0.0",
+  "description": "",
+  "main": "v2ray.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "qrcode-terminal": "^0.12.0"
+  }
+}
