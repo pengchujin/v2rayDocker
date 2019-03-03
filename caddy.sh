@@ -75,7 +75,6 @@ else
   $*
 fi
 pwd
-cp /etc/v2ray/config.json .
 cp /etc/Caddyfile .
 nohup /bin/parent caddy  --log stdout --agree=false &
 cat /etc/v2ray/config.json
