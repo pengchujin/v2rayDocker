@@ -79,4 +79,4 @@ cp /etc/Caddyfile .
 nohup /bin/parent caddy  --log stdout --agree=false &
 cat /etc/v2ray/config.json
 node v2ray.js
-/usr/bin/v2ray
+/usr/bin/v2ray -config /etc/v2ray/config.json
