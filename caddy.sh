@@ -40,9 +40,15 @@ cat > /etc/v2ray/config.json <<'EOF'
     }
   ],
   "outbounds": [
-    {
-      "protocol": "freedom",
-      "settings": {}
+    { 
+      "protocol": "socks",
+      "settings": {
+        "servers": [{
+        "address": "127.0.0.1",
+        "port": 7891,
+        "auth": "noauth"
+        }]
+      }
     }
   ]
 }

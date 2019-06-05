@@ -86,6 +86,6 @@ COPY index.html /srv/index.html
 # install process wrapper
 COPY --from=builder /go/bin/parent /bin/parent
 ADD caddy.sh /caddy.sh
-EXPOSE 443 80
+EXPOSE 443 80 7891
 ENTRYPOINT ["/caddy.sh"]
 # CMD ["--conf", "/etc/Caddyfile", "--log", "stdout", "--agree=$ACME_AGREE"]
