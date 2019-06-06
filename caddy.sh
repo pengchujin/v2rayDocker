@@ -2,7 +2,7 @@
 # FILE="/etc/Caddy"
 domain="$1"
 psname="$2"
-uuid=$(uuidgen)
+uuid="$3"
 cat > /etc/Caddyfile <<'EOF'
 domain
 {
