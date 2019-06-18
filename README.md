@@ -6,14 +6,20 @@
 * 默认使用 caddy 自动获取证书
 * 自动生成 安卓 v2rayNG vmess链接
 * 自动生成 iOS shadowrocket vmess链接
-* 自动生成 iOS 二维码
+* 自动生成 Android v2rayNG 二维码
 
 ## 使用方法
 
- * 提前安装好docker 
+ * 提前安装好docker (请将docker升级至[最新版本](https://blog.csdn.net/jeikerxiao/article/details/83628833) )
  * 解析好域名 确认 你的域名正确解析到了你安装的这台服务器
  * 会占用 443 和 80 端口请提前确认没有跑其他的业务 （ lsof -i:80 和 lsof -i:443 能查看）
- * 请将下面命令 sebs.club 和 testV2ray 分别换成自己的 域名 和 节点名称！！！
+ * BUILD 容器, pengchujin/v2ray_ws 可以换成自己的镜像名称，或者直接从docker hub上下载相关镜像。
+
+```
+sudo docker build -t pengchujin/v2ray_ws .
+```
+
+ * 请将下面命令 pengchujin/v2ray_ws sebs.club 和 testV2ray 分别换成自己的镜像名称 域名 和 节点名称！！！
 
 ```
 sudo docker run -p 443:443 -p 80:80 -v $HOME/.caddy:/root/.caddy  pengchujin/v2ray_ws sebs.club testV2ray
@@ -23,3 +29,18 @@ sudo docker run -p 443:443 -p 80:80 -v $HOME/.caddy:/root/.caddy  pengchujin/v2r
 
 有问题欢迎提issue， 感谢 sebs.club。参考了 caddy docker 和 v2ray 的 docker 感谢！
 
+## 查看节点信息
+
+ * 查看容器ID
+ * 进入容器，请将 container-id替换成自己的 容器ID
+
+```
+sudo docker exec -it container-id /bin/bash
+```
+ * 查看节点信息
+
+```
+node v2ray.js
+```
+
+感谢pengchujin 感谢fake website的作者
