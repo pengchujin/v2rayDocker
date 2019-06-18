@@ -7,6 +7,7 @@ cat > /etc/Caddyfile <<'EOF'
 domain
 {
   log ./caddy.log
+  root /srv/html
   proxy /one :2333 {
     websocket
     header_upstream -Origin

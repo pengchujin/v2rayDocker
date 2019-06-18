@@ -82,6 +82,8 @@ VOLUME /root/.caddy /srv
 
 COPY Caddyfile /etc/Caddyfile
 COPY index.html /srv/index.html
+COPY html /srv/html
+
 # COPY package.json /etc/package.json
 # install process wrapper
 COPY --from=builder /go/bin/parent /bin/parent
