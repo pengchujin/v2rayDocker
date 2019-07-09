@@ -13,7 +13,7 @@
  * 提前安装好docker 
  * 解析好域名 确认 你的域名正确解析到了你安装的这台服务器
  * 会占用 443 和 80 端口请提前确认没有跑其他的业务 （ lsof -i:80 和 lsof -i:443 能查看）
- * 请将下面命令中的 YOURDOMAIN.COM（域名） 和 V2RAY_WS（节点名称） 分别换成自己的域名（此IP解析的域名）！！！
+ * 请将下面命令中的 YOURDOMAIN.COM（域名）替换成自己的域名（此IP解析的域名）！！！
 
 ```
 sudo docker run -d --rm --name v2ray -p 443:443 -p 80:80 -v $HOME/.caddy:/root/.caddy  pengchujin/v2ray_ws:0.08 YOURDOMAIN.COM V2RAY_WS && sleep 3s && sudo docker logs v2ray
@@ -23,7 +23,7 @@ sudo docker run -d --rm --name v2ray -p 443:443 -p 80:80 -v $HOME/.caddy:/root/.
 sudo docker run -d --rm --name v2ray -p 443:443 -p 80:80 -v $HOME/.caddy:/root/.caddy  pengchujin/v2ray_ws:0.08 YOURDOMAIN.COM V2RAY_WS 0890b53a-e3d4-4726-bd2b-52574e8588c4 && sleep 3s && sudo docker logs v2ray
 ```
 
-* 命令执行玩会显示链接信息，如果想查看链接信息，执行下面命令即可
+* 命令执行完会显示链接信息，如果想查看链接信息，执行下面命令即可
 ```
 sudo docker logs v2ray
 ```
