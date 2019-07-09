@@ -2,7 +2,13 @@
 # FILE="/etc/Caddy"
 domain="$1"
 psname="$2"
-uuid=$(uuidgen)
+uuid="51be9a06-299f-43b9-b713-1ec5eb76e3d7"
+if  [ ! "$3" ] ;then
+    uuid=$(uuidgen)
+    echo "uuid 将会系统随机生成"
+else
+    uuid="$3"
+fi
 cat > /etc/Caddyfile <<'EOF'
 domain
 {
@@ -77,6 +83,9 @@ fi
 pwd
 cp /etc/Caddyfile .
 nohup /bin/parent caddy  --log stdout --agree=false &
+echo "配置 JSON 详情"
+echo " "
 cat /etc/v2ray/config.json
+echo " "
 node v2ray.js
 /usr/bin/v2ray -config /etc/v2ray/config.json
