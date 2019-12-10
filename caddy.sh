@@ -81,8 +81,11 @@ else
   $*
 fi
 pwd
-cp /etc/Caddyfile .
+# caddy must be started in another folder,otherwise the configuration will be leaked
+mkdir -p /srv/temp/
+cp /etc/Caddyfile /srv/temp
 nohup /bin/parent caddy  --log stdout --agree=false &
+cd /srv/
 echo "配置 JSON 详情"
 echo " "
 cat /etc/v2ray/config.json
