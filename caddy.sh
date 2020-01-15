@@ -1,13 +1,14 @@
 #!/bin/bash
 # FILE="/etc/Caddy"
 domain="$1"
-psname="$2"
+ipv6domain="$2"
+psname="$3"
 uuid="51be9a06-299f-43b9-b713-1ec5eb76e3d7"
-if  [ ! "$3" ] ;then
+if  [ ! "$4" ] ;then
     uuid=$(uuidgen)
     echo "uuid 将会系统随机生成"
 else
-    uuid="$3"
+    uuid="$4"
 fi
 cat > /etc/Caddyfile <<'EOF'
 domain
@@ -18,9 +19,19 @@ domain
     header_upstream -Origin
   }
 }
+ipv6
+{
+  log ./caddy.log
+  proxy /one :2333 {
+    websocket
+    header_upstream -Origin
+  }
+}
 
 EOF
 sed -i "s/domain/${domain}/" /etc/Caddyfile
+sed -i "s/ipv6/${ipv6domain}/" /etc/Caddyfile
+
 
 # v2ray
 cat > /etc/v2ray/config.json <<'EOF'
