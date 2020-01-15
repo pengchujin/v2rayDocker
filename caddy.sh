@@ -21,7 +21,7 @@ domain
 }
 ipv6
 {
-  log ./caddy.log
+  log ../caddy.log
   proxy /one :2333 {
     websocket
     header_upstream -Origin
