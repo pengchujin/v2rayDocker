@@ -13,7 +13,7 @@ fi
 cat > /etc/Caddyfile <<'EOF'
 domain
 {
-  log ./caddy.log
+  log ../caddy.log
   proxy /one :2333 {
     websocket
     header_upstream -Origin
@@ -95,6 +95,7 @@ pwd
 # caddy must be started in another folder,otherwise the configuration will be leaked
 mkdir -p /srv/temp/
 cp /etc/Caddyfile /srv/temp
+cd /srv/temp
 nohup /bin/parent caddy  --log stdout --agree=false &
 cd /srv/
 echo "配置 JSON 详情"
