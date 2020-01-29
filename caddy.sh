@@ -65,8 +65,8 @@ cat > /etc/trojan/config.json <<'EOF'
     ],
     "log_level": 1,
     "ssl": {
-        "cert": "/.caddy/acme/acme-v02.api.letsencrypt.org/sites/domain/domain.crt",
-        "key": "/.caddy/acme/acme-v02.api.letsencrypt.org/sites/domain/domain.key",
+        "cert": "/root/.caddy/acme/acme-v02.api.letsencrypt.org/sites/domain/domain.crt",
+        "key": "/root/.caddy/acme/acme-v02.api.letsencrypt.org/sites/domain/domain.key",
         "key_password": "",
         "cipher": "ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384",
         "cipher_tls13": "TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_256_GCM_SHA384",
@@ -100,7 +100,7 @@ cat > /etc/trojan/config.json <<'EOF'
 }
 EOF
 
-sed -i "s/domain/${domain}/" /etc/trojan/config.json
+sed -i "s/domain/${domain}/g" /etc/trojan/config.json
 
 # js
 cat > /srv/sebs.js <<'EOF'
@@ -131,5 +131,5 @@ cp /etc/Caddyfile .
 nohup /bin/parent caddy  --log stdout --agree=false &
 cat /etc/v2ray/config.json
 node v2ray.js
-/usr/bin/v2ray -config /etc/v2ray/config.json
-/usr/local/bin/trojan /etc/trojan/config.json
+nohup /bin/parent /usr/bin/v2ray -config /etc/v2ray/config.json & 
+/usr/local/bin/trojan /etc/trojan/config.json 
