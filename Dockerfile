@@ -13,7 +13,7 @@ RUN VERSION=${version} PLUGINS=${plugins} ENABLE_TELEMETRY=false /bin/sh /usr/bi
 #
 # Final stage
 #
-FROM alpine:3.8
+FROM alpine:3.9
 # process wrapper
 LABEL maintainer "sebs sebsclub@outlook.com"
 
@@ -47,6 +47,29 @@ RUN apk upgrade --update \
     && ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime \
     && echo ${TZ} > /etc/timezone \
     && rm -rf /tmp/v2ray /var/cache/apk/*
+
+# trojan
+ARG VERSION='v1.14.1'
+ENV TROJAN_CONFIG_DIR /etc/trojan/
+RUN apk add --no-cache --virtual .build-deps \
+        build-base \
+        cmake \
+        boost-dev \
+        openssl-dev \
+        mariadb-connector-c-dev \
+        git \
+    && mkdir -p \
+        ${TROJAN_CONFIG_DIR} \
+    && git clone --branch=${VERSION} https://github.com/trojan-gfw/trojan.git \
+    && (cd trojan && cmake . && make -j $(nproc) && strip -s trojan \
+    && mv trojan /usr/local/bin) \
+    && rm -rf trojan \
+    && apk del .build-deps \
+    && apk add --no-cache --virtual .trojan-rundeps \
+        libstdc++ \
+        boost-system \
+        boost-program_options \
+        mariadb-connector-c
 
 # ADD entrypoint.sh /entrypoint.sh
 WORKDIR /srv
