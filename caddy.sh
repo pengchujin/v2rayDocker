@@ -61,7 +61,7 @@ cat > /etc/trojan/config.json <<'EOF'
     "remote_addr": "127.0.0.1",
     "remote_port": 80,
     "password": [
-        "www.neu.edu.cn"
+        "uuid"
     ],
     "log_level": 1,
     "ssl": {
@@ -101,6 +101,7 @@ cat > /etc/trojan/config.json <<'EOF'
 EOF
 
 sed -i "s/domain/${domain}/g" /etc/trojan/config.json
+sed -i "s/uuid/${uuid}/" /etc/trojan/config.json
 
 # js
 cat > /srv/sebs.js <<'EOF'
@@ -130,6 +131,8 @@ pwd
 cp /etc/Caddyfile .
 nohup /bin/parent caddy  --log stdout --agree=false &
 cat /etc/v2ray/config.json
+cat /etc/trojan/config.json
 node v2ray.js
+echo "Trojan password: ${uuid}"
 nohup /bin/parent /usr/bin/v2ray -config /etc/v2ray/config.json & 
 /usr/local/bin/trojan /etc/trojan/config.json 
