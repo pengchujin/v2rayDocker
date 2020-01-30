@@ -3,7 +3,7 @@
 #
 FROM abiosoft/caddy:builder as builder
 
-ARG version="0.11.1"
+ARG version="1.0.3"
 ARG plugins="git,cors,realip,expires,cache"
 
 
@@ -13,7 +13,7 @@ RUN VERSION=${version} PLUGINS=${plugins} ENABLE_TELEMETRY=false /bin/sh /usr/bi
 #
 # Final stage
 #
-FROM alpine:3.8
+FROM alpine:3.10
 # process wrapper
 LABEL maintainer "sebs sebsclub@outlook.com"
 
@@ -81,7 +81,7 @@ COPY package.json /srv/package.json
 RUN  npm install
 COPY  v2ray.js /srv/v2ray.js
 
-ARG version="0.11.1"
+ARG version="1.0.3"
 LABEL caddy_version="$version"
 
 # Let's Encrypt Agreement
