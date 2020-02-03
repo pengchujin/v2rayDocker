@@ -2,7 +2,13 @@
 # FILE="/etc/Caddy"
 domain="$1"
 psname="$2"
-uuid=$(uuidgen)
+uuid="51be9a06-299f-43b9-b713-1ec5eb76e3d7"
+if  [ ! "$3" ] ;then
+    uuid=$(uuidgen)
+    echo "uuid 将会系统随机生成"
+else
+    uuid="$3"
+fi
 cat > /etc/Caddyfile <<'EOF'
 domain
 {
@@ -134,8 +140,12 @@ sleep 30
 killall caddy
 sed -i "s/${domain}/${domain}:80/" ./Caddyfile
 nohup /bin/parent caddy  --log stdout --agree=false &
+echo "配置 JSON 详情"
+echo " "
 cat /etc/v2ray/config.json
+echo " "
 cat /etc/trojan/config.json
+echo " "
 node v2ray.js
 echo "Trojan password: ${uuid}"
 /usr/local/bin/trojan /etc/trojan/config.json &

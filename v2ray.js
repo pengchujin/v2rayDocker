@@ -7,10 +7,11 @@ fs.readFile('sebs.js', 'utf8', function (err, data) {
     console.log(ios(node).toString())
     console.log('-----------------安卓 v2rayNG链接-----------------')
     console.log(android(node).toString())
+
     console.log('-----------------Android v2rayNG二维码------------------')
     qrcode.generate(android(node).toString(), {small: true},function (qrcode) {
-    console.log(qrcode);
-});
+        console.log(qrcode);
+    });
 });
 function ios(node) {
     !node.method ? node.method = 'chacha20-poly1305' : ''
