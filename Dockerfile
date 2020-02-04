@@ -4,8 +4,7 @@
 FROM abiosoft/caddy:builder as builder
 
 ARG version="1.0.3"
-ARG plugins="git,cors,realip,expires,cache"
-
+ARG plugins="git,cors,realip,expires,cache,cloudflare"
 
 RUN go get -v github.com/abiosoft/parent
 RUN VERSION=${version} PLUGINS=${plugins} ENABLE_TELEMETRY=false /bin/sh /usr/bin/builder.sh
@@ -47,29 +46,6 @@ RUN apk upgrade --update \
     && ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime \
     && echo ${TZ} > /etc/timezone \
     && rm -rf /tmp/v2ray /var/cache/apk/*
-
-# trojan
-ARG VERSION='v1.14.1'
-ENV TROJAN_CONFIG_DIR /etc/trojan/
-RUN apk add --no-cache --virtual .build-deps \
-        build-base \
-        cmake \
-        boost-dev \
-        openssl-dev \
-        mariadb-connector-c-dev \
-        git \
-    && mkdir -p \
-        ${TROJAN_CONFIG_DIR} \
-    && git clone --branch=${VERSION} https://github.com/trojan-gfw/trojan.git \
-    && (cd trojan && cmake . && make -j $(nproc) && strip -s trojan \
-    && mv trojan /usr/local/bin) \
-    && rm -rf trojan \
-    && apk del .build-deps \
-    && apk add --no-cache --virtual .trojan-rundeps \
-        libstdc++ \
-        boost-system \
-        boost-program_options \
-        mariadb-connector-c
 
 # ADD entrypoint.sh /entrypoint.sh
 WORKDIR /srv
