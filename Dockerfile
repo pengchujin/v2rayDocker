@@ -3,9 +3,8 @@
 #
 FROM abiosoft/caddy:builder as builder
 
-ARG version="0.11.1"
-ARG plugins="git,cors,realip,expires,cache"
-
+ARG version="1.0.3"
+ARG plugins="git,cors,realip,expires,cache,cloudflare"
 
 RUN go get -v github.com/abiosoft/parent
 RUN VERSION=${version} PLUGINS=${plugins} ENABLE_TELEMETRY=false /bin/sh /usr/bin/builder.sh
@@ -13,7 +12,7 @@ RUN VERSION=${version} PLUGINS=${plugins} ENABLE_TELEMETRY=false /bin/sh /usr/bi
 #
 # Final stage
 #
-FROM alpine:3.8
+FROM alpine:3.10
 # process wrapper
 LABEL maintainer "sebs sebsclub@outlook.com"
 
@@ -58,7 +57,7 @@ COPY package.json /srv/package.json
 RUN  npm install
 COPY  v2ray.js /srv/v2ray.js
 
-ARG version="0.11.1"
+ARG version="1.0.3"
 LABEL caddy_version="$version"
 
 # Let's Encrypt Agreement
@@ -82,6 +81,8 @@ VOLUME /root/.caddy /srv
 
 COPY Caddyfile /etc/Caddyfile
 COPY index.html /srv/index.html
+COPY html /srv/html
+
 # COPY package.json /etc/package.json
 # install process wrapper
 COPY --from=builder /go/bin/parent /bin/parent

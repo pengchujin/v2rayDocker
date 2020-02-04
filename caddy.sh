@@ -3,6 +3,7 @@
 domain="$1"
 psname="$2"
 uuid="51be9a06-299f-43b9-b713-1ec5eb76e3d7"
+
 if  [ ! "$3" ] ;then
     uuid=$(uuidgen)
     echo "uuid 将会系统随机生成"
@@ -13,12 +14,12 @@ cat > /etc/Caddyfile <<'EOF'
 domain
 {
   log ./caddy.log
+  root /srv/html
   proxy /one :2333 {
     websocket
     header_upstream -Origin
   }
 }
-
 EOF
 sed -i "s/domain/${domain}/" /etc/Caddyfile
 
@@ -52,11 +53,10 @@ cat > /etc/v2ray/config.json <<'EOF'
     }
   ]
 }
-
 EOF
-
 sed -i "s/uuid/${uuid}/" /etc/v2ray/config.json
 
+# js
 cat > /srv/sebs.js <<'EOF'
  {
     "add":"domain",
@@ -72,7 +72,6 @@ cat > /srv/sebs.js <<'EOF'
     "v":"2"
   }
 EOF
-
 if [ "$psname" != "" ] && [ "$psname" != "-c" ]; then
   sed -i "s/sebsclub/${psname}/" /srv/sebs.js
   sed -i "s/domain/${domain}/" /srv/sebs.js
